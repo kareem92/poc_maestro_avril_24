@@ -1,0 +1,7 @@
+appId: "${APP_ID}"  
+---
+- runFlow:
+    when:
+      visible: "(Fermer la fenêtre d'information|IGNORER)"
+    commands:
+        - tapOn: "(Fermer la fenêtre d'information|IGNORER)"   

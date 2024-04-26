@@ -1,0 +1,3 @@
+appId: "mq.martinique.rtm"
+---
+- runScript: test_config.js

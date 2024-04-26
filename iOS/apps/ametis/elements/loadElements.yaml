@@ -1,0 +1,3 @@
+appId: "com.canaltp.ametis"
+---
+- runScript: test_config.js

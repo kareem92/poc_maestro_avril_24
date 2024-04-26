@@ -1,0 +1,38 @@
+# Renseigner l'id au moment du lancement du test ==> -e APP_ID=com.actigraph.twisto.tabbarapp  [1/2]
+appId: "${APP_ID}"  
+---
+# Changer le nom de l'app pour lancer sur autre app, ex : ../mon_app/elements/loadElements.yaml [2/2]
+- runFlow: ../apps/mistral/elements/loadElements.yaml
+- launchApp :
+    clearState: true
+
+# Fermer la page qui apparait au lancement d'ondea sur ondea 
+- runFlow: close_button.yaml
+
+- assertVisible: Ajouter un favori Maison
+- tapOn: Ajouter un favori Maison # ajout du favoris maison
+- tapOn:
+    id: "${output.itineraire.app_name}:id/adresse"
+- inputText:  ${output.itineraire.favoris_maison}
+- tapOn:
+    text:  ${output.itineraire.favoris_maison}
+    index: 1
+- assertVisible:
+    id: ${output.itineraire.app_name}:id/icon
+    index: 0
+- assertVisible: Enregistrer ce favori|Ajouter aux destinations
+- tapOn: Enregistrer ce favori|Ajouter aux destinations
+
+- assertVisible: Ajouter un favori Travail # ajout du favoris travail
+- tapOn: Ajouter un favori Travail
+- tapOn:
+    id: "${output.itineraire.app_name}:id/adresse"
+- inputText:  ${output.itineraire.favoris_travail}
+- tapOn:
+    text:  ${output.itineraire.favoris_travail}
+    index: 1
+- assertVisible: Enregistrer ce favori|Ajouter aux destinations
+- tapOn: Enregistrer ce favori|Ajouter aux destinations
+
+- assertVisible: "${output.itineraire.favoris_maison}.*" # vérification du favoris maison sur l'accueil
+- assertVisible: "${output.itineraire.favoris_travail}.*" # vérification du favoris travail sur l'accueil

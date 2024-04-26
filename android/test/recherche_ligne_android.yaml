@@ -1,0 +1,59 @@
+# Renseigner l'id au moment du lancement du test ==> -e APP_ID=com.actigraph.twisto.tabbarapp  [1/2]
+appId: "${APP_ID}"  
+env:
+    CONTAINER_LIGNE: container_item
+    BOUTON_RECHERCHE: (search_button|search_src_text)
+    DIRECION_LIGNE: header_direction_stop_container
+    RECHERCHE_ARRET: search_edit_frame
+    CARTE_ARRET: generic_map
+    CONTENEUR_ACTION: actions_container
+    AFFICHER_FICHE_HORRAIRE: Afficher la fiche horaire
+---
+# Changer le nom de l'app pour lancer sur autre app, ex : ../mon_app/elements/loadElements.yaml [2/2]
+- runFlow: ../apps/mistral/elements/loadElements.yaml 
+- launchApp:
+    clearState: true
+
+# Fermer la page qui apparait au lancement d'ondeasur ondea 
+- runFlow: close_button.yaml
+
+# Recherche de ligne
+- tapOn: "Horaires"
+- runFlow:
+    when:
+        visible:
+            id: ${CONTAINER_LIGNE}
+            index: 0
+    commands:
+        - assertVisible:
+            id: ${CONTAINER_LIGNE}
+            index: 5
+
+- tapOn:
+    id: ${BOUTON_RECHERCHE}
+- inputText: "${output.itineraire.nom_ligne}"
+- assertVisible: "${output.itineraire.resultat_ligne_attendu}"
+- tapOn : "${output.itineraire.resultat_ligne_attendu}"
+- assertVisible: Arrêts
+- assertVisible: Infos trafic
+- assertVisible:
+    id: ${DIRECION_LIGNE}
+- assertVisible:
+    id: ${RECHERCHE_ARRET}
+- assertVisible: "${output.itineraire.arret_1_ligne_attendu}"
+- tapOn: "${output.itineraire.arret_1_ligne_attendu}"
+- assertVisible:
+    id: ${CARTE_ARRET}
+- assertVisible:
+    id: ${CONTENEUR_ACTION}
+- assertVisible: ${AFFICHER_FICHE_HORRAIRE}
+- tapOn: ${AFFICHER_FICHE_HORRAIRE}
+- runFlow:
+    when:
+        visible: 
+            id: "layout_date_and_hours"
+    commands:
+        - assertVisible:
+            id: "clock"
+- assertVisible: 
+    id: "layout_stop_point_direction"

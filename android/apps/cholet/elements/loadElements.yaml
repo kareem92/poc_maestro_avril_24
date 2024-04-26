@@ -1,0 +1,3 @@
+appId: "fr.casa.envibus"
+---
+- runScript: test_config.js

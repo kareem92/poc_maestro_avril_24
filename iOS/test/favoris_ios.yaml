@@ -1,0 +1,34 @@
+# Renseigner l'id au moment du lancement du test ==> -e APP_ID=com.actigraph.twisto.tabbarapp  [1/2]
+appId: "${APP_ID}"  
+---
+# Changer le nom de l'app pour lancer sur autre app, ex : ../mon_app/elements/loadElements.yaml [2/2]
+- runFlow: ../../android/apps/twisto/elements/loadElements.yaml 
+- launchApp
+
+# Fermer la page qui apparait au lancement d'ondea sur ondea 
+- runFlow: close_button.yaml
+
+- tapOn: Définir le favori de lieu maison|Définir
+- extendedWaitUntil:
+    # visible: "Place Louis Guillouard, Caen (14000), Modifier l'adresse du favori"
+    visible: ${output.itineraire.adresse_favoris_defaut}
+    timeout: 15000
+- tapOn: ${output.itineraire.adresse_favoris_defaut}
+    # point: 45%,26%
+- inputText: ${output.itineraire.favoris_maison}
+# - tapOn: Square Fauvel
+- tapOn: 
+    text: ${output.itineraire.favoris_maison}
+    index: 1
+- tapOn: Enregistrer ce favori
+- tapOn: Définir le favori de lieu travail|Définir
+- tapOn: ${output.itineraire.adresse_favoris_defaut}
+- inputText: ${output.itineraire.favoris_travail}
+- tapOn: 
+    text: ${output.itineraire.favoris_travail}
+    index: 1
+- tapOn: Enregistrer ce favori
+- takeScreenshot: MainScreen
+# Impossible de vérifier les adresses sur l'ecran d'accueil pour le moment
+# - assertVisible: "${output.itineraire.favoris_maison}.*" 
+# - assertVisible: "${output.itineraire.favoris_travail}.*"

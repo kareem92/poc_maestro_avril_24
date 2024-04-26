@@ -1,0 +1,91 @@
+# Renseigner l'id au moment du lancement du test ==> -e APP_ID=com.actigraph.twisto.tabbarapp  [1/2]
+appId: "${APP_ID}" 
+env:
+    ICON_TC: Transport en commun
+    ICON_VELO: (Vélo/Trott' perso|Vélo/Trottinette|Vélo|Vélo perso)
+    ICON_VOITURE: Voiture perso
+    ICON_MARCHE: Marche à pied
+    ICON_COVOIT: Covoiturage
+    RESULTAT_RI: resultRoot
+---
+# Changer le nom de l'app pour lancer sur autre app, ex : ../mon_app/elements/loadElements.yaml [2/2]
+- runFlow: ../apps/mistral/elements/loadElements.yaml
+- launchApp :
+    clearState: true
+    # Le Problème de ma position se règle peut- être avec "permissions" 
+    # permissions: { all: deny } 
+
+# Fermer la page qui apparait au lancement d'ondea ou d'autres applications 
+- runFlow: close_button.yaml
+
+- tapOn: Rechercher un itinéraire
+- inputText: ${output.itineraire.origine}
+- tapOn: ${output.itineraire.slc_origine}
+- inputText: ${output.itineraire.destination}
+- tapOn: ${output.itineraire.slc_destination} 
+
+- runFlow:
+    file: ./subflow/tap_if_visible.yaml # vérifie que le mode de transport existe, si oui, tape dedans et vérifie ==> 1 résultat (J'ai supprimé la vérif du message d'erreur sinon c'est toujours vrai)
+    env:
+        TAB_LABEL: ${ICON_TC}
+
+- runFlow:
+    file: ./subflow/tap_if_visible.yaml
+    env:
+        TAB_LABEL: ${ICON_VELO}
+
+- runFlow:
+    file: ./subflow/tap_if_visible.yaml
+    env:
+        TAB_LABEL: ${ICON_VOITURE}
+
+- runFlow:
+    file: ./subflow/tap_if_visible.yaml
+    env:
+        TAB_LABEL: ${ICON_MARCHE}
+
+- runFlow:
+    file: ./subflow/tap_if_visible.yaml
+    env:
+        TAB_LABEL: ${ICON_COVOIT}
+
+
+
+
+
+
+
+
+# - runFlow:
+#     when:
+#         visible: ${ICON_TC}
+#     commands:
+#         - tapOn: ${ICON_TC}
+#         - assertVisible:
+#             id: ${RESULTAT_RI}
+#             index: 0
+# - runFlow:
+#     when:
+#         visible: ${ICON_VELO}
+#     commands:
+#         - tapOn: ${ICON_VELO}
+#         - assertVisible:
+#             id: ${RESULTAT_RI}
+#             index: 0
+# - runFlow:
+#     when:
+#         visible: ${ICON_VOITURE}
+#     commands:
+#         - tapOn: ${ICON_VOITURE}
+#         - assertVisible:
+#             id: ${RESULTAT_RI}
+#             index: 0
+# - runFlow:
+#     when:
+#         visible: ${ICON_MARCHE}
+#     commands:
+#         - tapOn: ${ICON_MARCHE}
+#         - assertVisible:
+#             id: ${RESULTAT_RI}
+#             index: 0
+

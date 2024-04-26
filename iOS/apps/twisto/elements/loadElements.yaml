@@ -1,0 +1,3 @@
+appId: "com.actigraph.twisto.tabbarapp"
+---
+- runScript: test_config.js

@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+env:
+    TAB_LABEL: ${TAB_LABEL}
+# Taps a tab label if it's visibile  
+---
+- runFlow:
+    when:
+        visible: ${TAB_LABEL}
+    commands:
+        - tapOn: ${TAB_LABEL}
+        - assertVisible:
+            id: resultRoot
+            index: 0

@@ -1,0 +1,28 @@
+# Renseigner l'id au moment du lancement du test ==> -e APP_ID=com.actigraph.twisto.tabbarapp  [1/2]
+appId: "${APP_ID}"  
+# env:
+---
+# Changer le nom de l'app pour lancer sur autre app, ex : ../mon_app/elements/loadElements.yaml [2/2]
+# - runFlow: ../apps/alesy/elements/loadElements.yaml 
+- runFlow: ../../android/apps/twisto/elements/loadElements.yaml 
+- launchApp
+
+- tapOn: Horaires
+- assertVisible: Favoris
+- assertVisible: Lignes
+- assertVisible: Arrêts
+- assertVisible: Rechercher
+- tapOn: Rechercher
+- inputText: "${output.itineraire.nom_ligne}"
+- assertVisible: "${output.itineraire.resultat_ligne_attendu}"
+- tapOn : "${output.itineraire.resultat_ligne_attendu}"
+# - assertVisible: Navette marche St Maurice
+# - tapOn: Navette marche St Maurice
+- assertVisible: "${output.itineraire.arret_1_ligne_attendu}"
+- tapOn:  "${output.itineraire.arret_1_ligne_attendu}"
+- assertVisible: Ajouter l'arrêt aux favoris
+- assertVisible: S'abonner aux infos trafic
+- assertVisible: Afficher la fiche horaire
+- tapOn: Afficher la fiche horaire
+- assertVisible: Horaires
+- assertVisible: Infos trafic

@@ -1,0 +1,3 @@
+appId: "fr.txiktxak.paysbasque"
+---
+- runScript: test_config.js

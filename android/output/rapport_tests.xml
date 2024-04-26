@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" tests="4" failures="0" time="157">
+    <testcase id="recherche_itineraire" name="recherche_itineraire" classname="recherche_itineraire" time="49" status="SUCCESS"/>
+    <testcase id="close_button" name="close_button" classname="close_button" time="7" status="SUCCESS"/>
+    <testcase id="recherche_ligne" name="recherche_ligne" classname="recherche_ligne" time="44" status="SUCCESS"/>
+    <testcase id="favoris" name="favoris" classname="favoris" time="57" status="SUCCESS"/>
+  </testsuite>
+</testsuites>
